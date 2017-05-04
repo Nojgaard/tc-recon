@@ -73,9 +73,9 @@ int main(int argc, const char *argv[]) {
 	/* std::getline(fst, str_st); */
 
 	/* gt.read_newick(str_gt); */
-	gt.print();
+	/* gt.print(); */
 	/* st.read_newick(str_st); */
-	st.print();
+	/* st.print(); */
 
 	/* std::cout << "Reading Species Tree" << std::endl; */
 	/* pugi::xml_document sdoc; */
