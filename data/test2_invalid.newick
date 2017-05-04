@@ -1,2 +1,2 @@
 ((A,B)(C,D))
-((B,(A,(C,D)S[1])H)S,(D,(C,(A,B)S[1])H)S)S
+((b1[B],(a1[A],[t](c1[C],d1[D])S)H)S,(d2[D],(c2[C],[t](a2[A],b2[B])S)H)S)S
