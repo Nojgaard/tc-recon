@@ -1,0 +1,15 @@
+<SpeciesTree>
+	<Node>
+		<Node>
+			<Node Species = "A" />
+			<Node>
+				<Node Species = "B" />
+				<Node Species = "C" />
+			</Node>
+		</Node>
+		<Node>
+			<Node Species = "D" />
+			<Node Species = "E" />
+		</Node>
+	</Node>
+</SpeciesTree>

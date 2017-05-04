@@ -1,0 +1,24 @@
+<GeneTree>
+	<Node Event="S">
+		<Node Gene="e2" Species="E" />
+		<Node Event="S">
+			<Node Gene="a" Species="A" />
+			<Node Event="D">
+				<Node Gene="b1" Species="B" />
+				<Node Event="H">
+					<Node Gene="c1" Species="C" />
+					<Node Event="S" Transfer="1" >
+						<Node Gene="e1" Species="E" />
+						<Node Event="H">
+							<Node Gene="d" Species="D" />
+							<Node Event="S" Transfer="1">
+							<Node Gene="b2" Species="B" />
+							<Node Gene="c2" Species="C" />
+							</Node>
+						</Node>
+					</Node>
+				</Node>
+			</Node>
+		</Node>
+	</Node>
+</GeneTree>
