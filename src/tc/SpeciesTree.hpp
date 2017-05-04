@@ -3,7 +3,7 @@
 #include <boost/optional.hpp>
 #include "Tree.hpp"
 #include <vector>
-#include <pugixml.hpp>
+/* #include <pugixml.hpp> */
 #include <iostream>
 
 namespace tc {
@@ -30,7 +30,7 @@ public:
 	
 	std::vector<Node> leaf_set(Node n) const;
 
-	void read_xml(const pugi::xml_document& doc);
+	/* void read_xml(const pugi::xml_document& doc); */
 	void write_dot(std::ostream& os) const;
 	void write_nexus(std::ostream& os = std::cout) const;
 	void print();

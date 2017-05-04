@@ -1,7 +1,7 @@
 #ifndef TC_TREE_HPP
 #define TC_TREE_HPP
 #include <boost/graph/adjacency_list.hpp>
-#include <pugixml.hpp>
+/* #include <pugixml.hpp> */
 #include <vector>
 
 namespace tc {
@@ -74,14 +74,14 @@ protected:
 	const NodeProp& data(Node n) const { return _graph[n].data; }
 	NodeProp& data(Node n) { return _graph[n].data; }
 
-	template <typename AttrParser>
-	void read_xml_node_base(const pugi::xml_node& xn, Node p, AttrParser attr_parser) {
-		NodeProp np = attr_parser(xn);
-		Node n = add_node_base(p, std::move(np));
-		for (auto xc : xn.children("Node")) {
-			read_xml_node_base(xc, n, attr_parser);
-		}
-	}
+	/* template <typename AttrParser> */
+	/* void read_xml_node_base(const pugi::xml_node& xn, Node p, AttrParser attr_parser) { */
+	/* 	NodeProp np = attr_parser(xn); */
+	/* 	Node n = add_node_base(p, std::move(np)); */
+	/* 	for (auto xc : xn.children("Node")) { */
+	/* 		read_xml_node_base(xc, n, attr_parser); */
+	/* 	} */
+	/* } */
 
 private:
 	int depth(Node v) const { return _graph[v].depth; }

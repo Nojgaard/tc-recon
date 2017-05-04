@@ -1,6 +1,6 @@
 #include "SpeciesTree.hpp"
 #include <cassert>
-#include <pugixml.hpp>
+/* #include <pugixml.hpp> */
 #include <stdexcept>
 #include <iostream>
 
@@ -21,23 +21,23 @@ SpeciesTree::Node SpeciesTree::add_node(Node p, std::string species) {
 	return add_node_base(p, impl::SNodeProp{species});
 }
 
-void SpeciesTree::read_xml(const pugi::xml_document& doc) {
-	auto xst = doc.child("SpeciesTree");
-	if (!xst) {
-		throw std::invalid_argument("Root node must be 'SpeciesTree'");
-	}
+/* void SpeciesTree::read_xml(const pugi::xml_document& doc) { */
+/* 	auto xst = doc.child("SpeciesTree"); */
+/* 	if (!xst) { */
+/* 		throw std::invalid_argument("Root node must be 'SpeciesTree'"); */
+/* 	} */
 
-	auto xn = xst.child("Node");
-	if (!xn) {
-		throw std::invalid_argument("No root found in SpeciesTree");
-	}
+/* 	auto xn = xst.child("Node"); */
+/* 	if (!xn) { */
+/* 		throw std::invalid_argument("No root found in SpeciesTree"); */
+/* 	} */
 
-	auto attr_parser = [] (const pugi::xml_node& xn) -> impl::SNodeProp {
-		return impl::SNodeProp{ xn.attribute("Species").value()};
-	};
+/* 	auto attr_parser = [] (const pugi::xml_node& xn) -> impl::SNodeProp { */
+/* 		return impl::SNodeProp{ xn.attribute("Species").value()}; */
+/* 	}; */
 
-	read_xml_node_base(xn, root(), attr_parser);
-}
+/* 	read_xml_node_base(xn, root(), attr_parser); */
+/* } */
 
 void SpeciesTree::print() {
 	print_node(root());

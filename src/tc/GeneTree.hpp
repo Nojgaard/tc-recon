@@ -2,7 +2,7 @@
 #define TC_GENE_TREE_HPP
 #include "Tree.hpp"
 #include <boost/variant.hpp>
-#include <pugixml.hpp>
+/* #include <pugixml.hpp> */
 #include <iostream>
 
 namespace tc {
@@ -48,7 +48,7 @@ public:
 	Node add_node(Node p, std::string gene, std::string species, bool is_transfer = false);
 	std::vector<Node> transfer_nodes(Node n) const;
 
-	void read_xml(const pugi::xml_document& doc);
+	/* void read_xml(const pugi::xml_document& doc); */
 	void read_newick(const std::string& str);
 	void write_nexus(std::ostream& os = std::cout) const;
 	void write_dot(std::ostream& os = std::cout) const;

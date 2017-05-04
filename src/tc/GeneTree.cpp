@@ -1,5 +1,5 @@
 #include "GeneTree.hpp"
-#include <pugixml.hpp>
+/* #include <pugixml.hpp> */
 #include <iostream>
 
 namespace tc {
@@ -64,32 +64,32 @@ Event parse_event(const std::string& se) {
 	}
 }
 
-void GeneTree::read_xml(const pugi::xml_document& doc) {
-	auto xgt = doc.child("GeneTree");
-	if (!xgt) { throw std::invalid_argument("No GeneTree Found"); }
+/* void GeneTree::read_xml(const pugi::xml_document& doc) { */
+/* 	auto xgt = doc.child("GeneTree"); */
+/* 	if (!xgt) { throw std::invalid_argument("No GeneTree Found"); } */
 
-	auto xn = xgt.child("Node");
-	if (!xn) { throw std::invalid_argument("No root node found"); }
+/* 	auto xn = xgt.child("Node"); */
+/* 	if (!xn) { throw std::invalid_argument("No root node found"); } */
 
-	if (!xn.attribute("Event")) { throw std::invalid_argument("Root must be an event node"); }
+/* 	if (!xn.attribute("Event")) { throw std::invalid_argument("Root must be an event node"); } */
 
-	auto attr_parser = [] (const pugi::xml_node& xn) -> impl::NodeProp {
-		bool is_transfer = false;
-		if (xn.attribute("Transfer")) { is_transfer = xn.attribute("Transfer").as_bool(); }
-		if (xn.attribute("Event")) {
-			return impl::NodeProp { parse_event(xn.attribute("Event").value()), is_transfer };
-		} else {
-			return impl::NodeProp { impl::Leaf { xn.attribute("Gene").value()
-				                                , xn.attribute("Species").value()}, is_transfer };
-		}
-	};
+/* 	auto attr_parser = [] (const pugi::xml_node& xn) -> impl::NodeProp { */
+/* 		bool is_transfer = false; */
+/* 		if (xn.attribute("Transfer")) { is_transfer = xn.attribute("Transfer").as_bool(); } */
+/* 		if (xn.attribute("Event")) { */
+/* 			return impl::NodeProp { parse_event(xn.attribute("Event").value()), is_transfer }; */
+/* 		} else { */
+/* 			return impl::NodeProp { impl::Leaf { xn.attribute("Gene").value() */
+/* 				                                , xn.attribute("Species").value()}, is_transfer }; */
+/* 		} */
+/* 	}; */
 
-	auto rp = attr_parser(xn);
-	if (rp.is_transfer) { throw std::invalid_argument("Root cannot be transfer node"); }
-	get<Event>(data(root()).label) = get<Event>(rp.label);
+	/* auto rp = attr_parser(xn); */
+	/* if (rp.is_transfer) { throw std::invalid_argument("Root cannot be transfer node"); } */
+	/* get<Event>(data(root()).label) = get<Event>(rp.label); */
 
-	for (auto xc : xn.children("Node")) { read_xml_node_base(xc, root(), attr_parser); }
-}
+	/* for (auto xc : xn.children("Node")) { read_xml_node_base(xc, root(), attr_parser); } */
+/* } */
 
 
 void GeneTree::print_node(Node n) {
