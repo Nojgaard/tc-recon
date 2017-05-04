@@ -44,7 +44,7 @@ least one of its children are specified as a transfer-edge, by adding the tag
 
 For a larger example see `data/test1_valid.newick`
 
-#Running the program
+# Running the program
 To run the program: (assuming the executable is in your current folder build)
 ```
 ./tc -i ../data/test1_valid.newick -o test.nexus
