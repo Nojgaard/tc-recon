@@ -1,2 +1,2 @@
 add_executable(tc main.cpp GeneTree.cpp SpeciesTree.cpp ReconMap.cpp)
-target_link_libraries(tc pugixml)
+#target_link_libraries(tc pugixml)
