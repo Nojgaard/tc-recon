@@ -151,22 +151,33 @@ void ReconMap::write_dot(std::ostream& os) {
 
 void ReconMap::write_aux_graph(std::ostream& os) {
 	std::vector<size_t> gt2a, st2a;
+	std::set<std::pair<size_t, size_t>> used_edges;
 	AuxGraph time_graph;
 	std::tie(gt2a, st2a) = build_time_graph(time_graph);
-	std::vector<bool> used_nodes(num_vertices(time_graph), false);
+	std::vector<std::string> used_nodes(num_vertices(time_graph), "");
 	os << "digraph g {" << std::endl;
+	os << "subgraph cluster_gt { label = \"Gene Tree\"" << std::endl;
+	_gt.write_dot(os, true);
+	os << "}" << std::endl;
+	os << "subgraph cluster_st { label = \"Species Tree\"" << std::endl;
+	_st.write_dot(os, true);
+	os << "}" << std::endl;
+
+	os << "subgraph cluster_aux { label = \"Aux Graph\"" << std::endl;
 	for (auto x : _st.nodes()) {
-		/* os << st2a[x] << std::endl; */
-		used_nodes[st2a[x]] = true;
-		std::string shape = "circle";
-		std::string label = "\"\"";
-		os << st2a[x] << "[shape=" << shape << ",height=.5,width=.5,fixedsize=true,label="<<label<<"];" << std::endl;
+		used_nodes[st2a[x]] = "s" + std::to_string(x);
+		if (_st.is_leaf(x)) {
+			used_nodes[st2a[x]] = _st.species(x);
+		}
 	}
 	for (auto u : _gt.nodes()) {
-		if (used_nodes[gt2a[u]]) { continue; }
-		used_nodes[gt2a[u]] = true;
+		if (!_gt.is_leaf(u) && used_nodes[gt2a[u]] != "") { 
+			used_nodes[gt2a[u]] += ", g" + std::to_string(u);
+			continue; 
+		}
+		/* used_nodes[gt2a[u]] = true; */
 		std::string shape = "circle";
-		std::string label = "\"\"";
+		std::string label = "\"g"+std::to_string(u)+"\"";
 		if (_gt.is_leaf(u)) {
 			label = "\"" + _gt.species(u) + "\"";
 		}
@@ -177,14 +188,27 @@ void ReconMap::write_aux_graph(std::ostream& os) {
 		}
 		os << gt2a[u] << "[shape=" << shape << ",height=.5,width=.5,fixedsize=true,label="<<label<<"];" << std::endl;
 	}
+	for (auto x : _st.nodes()) {
+		/* os << st2a[x] << std::endl; */
+		/* used_nodes[st2a[x]] = std::to_string(x); */
+		std::string shape = "circle";
+		std::string label = "\""+used_nodes[st2a[x]]+"\"";
+		os << st2a[x] << "[shape=" << shape << ",height=.5,width=.5,fixedsize=true,label="<<label<<"];" << std::endl;
+	}
 	boost::graph_traits<AuxGraph>::edge_iterator eit, eit_end;
 	for (std::tie(eit, eit_end) = boost::edges(time_graph);
 			eit != eit_end; ++eit) {
 		auto e = *eit;
 		size_t src = source(e, time_graph);
 		size_t tar = target(e, time_graph);
+		auto epair = std::make_pair(src, tar);
+		if (used_edges.find(epair) != used_edges.end()) {
+			continue;
+		}
 		os << src << "->" << tar << std::endl;
+		used_edges.insert(epair);
 	}
+	os << "}" << std::endl;
 	os << "}";
 }
 

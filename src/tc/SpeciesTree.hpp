@@ -31,7 +31,7 @@ public:
 	std::vector<Node> leaf_set(Node n) const;
 
 	/* void read_xml(const pugi::xml_document& doc); */
-	void write_dot(std::ostream& os) const;
+	void write_dot(std::ostream& os, bool directed = false) const;
 	void write_nexus(std::ostream& os = std::cout) const;
 	void print();
 	void read_newick(const std::string& str);

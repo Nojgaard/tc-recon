@@ -118,10 +118,10 @@ void GeneTree::print() {
 	std::cout << std::endl;
 }
 
-void GeneTree::write_dot(std::ostream& os) const {
+void GeneTree::write_dot(std::ostream& os, bool directed) const {
 	for (auto u : nodes()) {
 		std::string shape = "circle";
-		std::string label = "\"\"";
+		std::string label = "\""+std::to_string(u)+"\"";
 		if (is_leaf(u)) {
 			label = "\"" + species(u) + "\"";
 		}
@@ -132,11 +132,12 @@ void GeneTree::write_dot(std::ostream& os) const {
 		}
 		os << "g" << u << "[shape=" << shape << ",height=.5,width=.5,fixedsize=true,label="<<label<<"];" << std::endl;
 	}
+	std::string etype = (directed) ? " -> " : " -- ";
 	for (auto u : nodes()) {
 		for (auto v : children(u)) {
 			std::string style = "solid";
 			if (is_transfer(v)) { style = "dashed"; }
-			os << "g" << u << " -- g" << v << "[weight=10,splines=curved, style=" << style << "];" << std::endl;
+			os << "g" << u << etype << "g" << v << "[weight=10,splines=curved, style=" << style << "];" << std::endl;
 		}
 	}
 }

@@ -51,7 +51,7 @@ public:
 	/* void read_xml(const pugi::xml_document& doc); */
 	void read_newick(const std::string& str);
 	void write_nexus(std::ostream& os = std::cout) const;
-	void write_dot(std::ostream& os = std::cout) const;
+	void write_dot(std::ostream& os = std::cout, bool make_directed = false) const;
 	void write_leafset(std::ostream& os, Node n) const;
 	void print();
 

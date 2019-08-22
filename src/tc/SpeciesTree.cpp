@@ -72,9 +72,9 @@ std::vector<SpeciesTree::Node> SpeciesTree::leaf_set(Node n) const {
 }
 
 
-void SpeciesTree::write_dot(std::ostream& os) const {
+void SpeciesTree::write_dot(std::ostream& os, bool directed) const {
 	for (auto x : nodes()) {
-		std::string label = "\"\"";
+		std::string label = "\""+std::to_string(x)+"\"";
 		if (is_leaf(x)) {
 			label = "\"" + species(x) + "\"";
 		}
@@ -83,9 +83,10 @@ void SpeciesTree::write_dot(std::ostream& os) const {
 	/* os << "node[shape=none, width=0, height=0, label=\"\",fixedsize=true];" << std::endl; */
 	os << "node[constraint=false,shape=point, width=0.01, width=0.01, label=\"\"];" << std::endl;
 	/* os << "edge[arrowhead=none];" << std::endl; */
+	std::string etype = (directed) ? " -> " : " -- ";
 	for (auto x : nodes()) {
 		for (auto y : children(x)) {
-			os << "s" << x << " -- sb" << x << y << "-- s" << y << ";" << std::endl;
+			os << "s" << x << etype << "sb" << x << y << etype << "s" << y << ";" << std::endl;
 		}
 	}
 }
