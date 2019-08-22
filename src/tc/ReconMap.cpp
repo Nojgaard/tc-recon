@@ -149,6 +149,45 @@ void ReconMap::write_dot(std::ostream& os) {
 	os << "}" << std::endl;
 }	
 
+void ReconMap::write_aux_graph(std::ostream& os) {
+	std::vector<size_t> gt2a, st2a;
+	AuxGraph time_graph;
+	std::tie(gt2a, st2a) = build_time_graph(time_graph);
+	std::vector<bool> used_nodes(num_vertices(time_graph), false);
+	os << "digraph g {" << std::endl;
+	for (auto x : _st.nodes()) {
+		/* os << st2a[x] << std::endl; */
+		used_nodes[st2a[x]] = true;
+		std::string shape = "circle";
+		std::string label = "\"\"";
+		os << st2a[x] << "[shape=" << shape << ",height=.5,width=.5,fixedsize=true,label="<<label<<"];" << std::endl;
+	}
+	for (auto u : _gt.nodes()) {
+		if (used_nodes[gt2a[u]]) { continue; }
+		used_nodes[gt2a[u]] = true;
+		std::string shape = "circle";
+		std::string label = "\"\"";
+		if (_gt.is_leaf(u)) {
+			label = "\"" + _gt.species(u) + "\"";
+		}
+		if (!_gt.is_leaf(u) && _gt.event(u) == Event::Duplication) {
+			shape = "square";
+		} else if (!_gt.is_leaf(u) && _gt.event(u) == Event::HGT) {
+			shape = "triangle";
+		}
+		os << gt2a[u] << "[shape=" << shape << ",height=.5,width=.5,fixedsize=true,label="<<label<<"];" << std::endl;
+	}
+	boost::graph_traits<AuxGraph>::edge_iterator eit, eit_end;
+	for (std::tie(eit, eit_end) = boost::edges(time_graph);
+			eit != eit_end; ++eit) {
+		auto e = *eit;
+		size_t src = source(e, time_graph);
+		size_t tar = target(e, time_graph);
+		os << src << "->" << tar << std::endl;
+	}
+	os << "}";
+}
+
 void ReconMap::write_nexus_taxa(std::ostream& os) {
 	std::unordered_set<std::string> leafs;
 	for (auto n : _gt.nodes()) {
@@ -232,5 +271,6 @@ void ReconMap::write_nexus(std::ostream& os) {
 	write_nexus_recon(os);
 	os << std::endl;
 }
+
 
 } /* tc */ 

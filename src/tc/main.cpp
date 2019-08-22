@@ -9,7 +9,7 @@
 
 struct Dummy {};
 int main(int argc, const char *argv[]) {
-	std::string input_path, output_path;
+	std::string input_path, output_path, write_aux;
 	bool write_dot;
 	try {
 		using namespace TCLAP;
@@ -17,11 +17,13 @@ int main(int argc, const char *argv[]) {
 		ValueArg<std::string> inputArg("i", "input", "File input path", true, "", "string", cmd);
 		ValueArg<std::string> outputArg("o", "output", "File output path", false, "", "string", cmd);
 		SwitchArg dotArg("d", "dot", "write dot file", cmd, false);
+		ValueArg<std::string> auxArg("a", "aux_path", "File input path", false, "", "string", cmd);
 		cmd.parse(argc, argv);
 
 		input_path = inputArg.getValue();
 		output_path = outputArg.getValue();
 		write_dot = dotArg.getValue();
+		write_aux = auxArg.getValue();
 
 	} catch (TCLAP::ArgException &e) {  // catch any exceptions  
 		std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl; 
@@ -95,6 +97,12 @@ int main(int argc, const char *argv[]) {
 	/* } */
 	tc::ReconMap rcm(gt, st);
 	/* rcm.print(); */
+
+	if (write_aux != "") {
+		std::ofstream ft(write_aux);
+		rcm.write_aux_graph(ft);
+	}
+
 	auto res = rcm.make_time_consistent();
 	if (res.first) {
 		if (output_path != "") {

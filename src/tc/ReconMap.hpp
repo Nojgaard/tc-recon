@@ -18,6 +18,7 @@ public:
 	void print();
 	void write_dot(std::ostream& os = std::cout);
 	void write_nexus(std::ostream& os = std::cout);
+	void write_aux_graph(std::ostream& os);
 private:
 	using AuxGraph = boost::adjacency_list<boost::vecS,boost::vecS,boost::directedS,size_t>;
 	std::pair<std::vector<size_t>, std::vector<size_t>> build_time_graph(AuxGraph& g);
@@ -26,6 +27,7 @@ private:
 	SpeciesTree::Node& lca_g2s(GeneTree::Node gn);
 	void build_leaf_map();
 	void build_lca_map(GeneTree::Node n);
+
 
 	void write_nexus_taxa(std::ostream& os);
 	void write_nexus_trees(std::ostream& os);
